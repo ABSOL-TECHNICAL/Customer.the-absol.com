@@ -1,0 +1,65 @@
+{
+    "name": "arbermustafa/filament-locationpickr-field",
+    "description": "Location picker field for Filament Php using Google Maps",
+    "keywords": [
+        "arbermustafa",
+        "laravel",
+        "filament-plugin",
+        "filament-locationpickr-field",
+        "google-maps",
+        "maps",
+        "form",
+        "field",
+        "php"
+    ],
+    "homepage": "https://github.com/arbermustafa/filament-locationpickr-field",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arber Mustafa",
+            "email": "info@arbermustafa.com",
+            "role": "Developer",
+            "homepage": "https://arbermustafa.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "filament/forms": "^3.0",
+        "spatie/laravel-package-tools": "^1.13.5"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "ArberMustafa\\FilamentLocationPickrField\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ArberMustafa\\FilamentLocationPickrField\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ArberMustafa\\FilamentLocationPickrField\\LocationPickrFieldServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
