@@ -315,7 +315,6 @@ class Approve extends Action
                                     ->pluck('sales_representative','id')),              
             Select::make('collector_id')
                             ->label('Collector')
-                            ->required()
                             ->visible(function(Model $record){
                                         if($record->approval_flow==ProcessApprovalFlow::query()->pluck('order')->first()+1){
                                         return true;
@@ -369,7 +368,7 @@ class Approve extends Action
                 ->pluck('customer_categories_name', 'id')),
             Textarea::make("comment")
                 ->required()
-                ->label('Comments'),
+                ->label('Comments')->columnSpan(2),
                
         ];
     }

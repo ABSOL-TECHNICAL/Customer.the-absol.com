@@ -500,6 +500,8 @@ class ViewCustomerSites extends ViewRecord
 
                     Section::make('CUSTOMER SITE')
                     ->schema([
+                        Section::make('')
+                        ->schema([
                         TextEntry::make('customer_number')->label('Number')
                         ->visible(function ($state) {
                             if ($state == null) {
@@ -507,30 +509,17 @@ class ViewCustomerSites extends ViewRecord
                             }
                         }),
                         TextEntry::make('name')->label('Customer Name'),
-                        RepeatableEntry::make('Address')
-                        ->schema([
-                            TextEntry::make('location_name')->label('Location Name'),
-                            TextEntry::make('location_type')->label('Location Type'),
-                            TextEntry::make('address_1')->label('Address 1'),
-                            TextEntry::make('address_2')->label('Address 2'),
-                            TextEntry::make('address_3')->label('Address 3'),
-                            TextEntry::make('address_4')->label('Address 4'),
-                            TextEntry::make('postal_code')->label('Postal Code'),
-                            TextEntry::make('country_id')->label('Country'),
-                            TextEntry::make('site_name')->label('Site Name'),
-                            TextEntry::make('nearest_landmark')->label('Landmark'),
-                            TextEntry::make('longitude')->label('Longitude'),
-                            TextEntry::make('latitude')->label('Latitude'),
-                            TextEntry::make('companylandline_number')->label('Landline Number'),
-                            TextEntry::make('payment_mode')->label('Payment Mode'),
-                        ])->columns(2),
-         
-                    ]),
-
-                    Section::make('ADDITIONAL INFORMATION')
-                            ->schema([
-                                               
-                            TextEntry::make('payment_terms_id')->label('Payment Terms')->default(function(){
+                        TextEntry::make('approved_credit_value')->label('Credit Value')->default(function(){
+                            $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->get()->last();
+                            if($comments==null){
+                                return 'N/A';
+                            }
+                            else{
+                                return $comments->approved_credit_value;
+    
+                            }
+                        }),
+                        TextEntry::make('payment_terms_id')->label('Payment Terms')->default(function(){
                             $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->orderBy('id','desc')->first();
                             
                             if($comments==null){
@@ -623,20 +612,129 @@ class ViewCustomerSites extends ViewRecord
     
                             }
                         }),
+                        ])->columns(2),
+  
+                        RepeatableEntry::make('Address')
+                        ->schema([
+                            TextEntry::make('location_name')->label('Location Name'),
+                            TextEntry::make('location_type')->label('Location Type'),
+                            TextEntry::make('address_1')->label('Address 1'),
+                            TextEntry::make('address_2')->label('Address 2'),
+                            TextEntry::make('address_3')->label('Address 3'),
+                            TextEntry::make('address_4')->label('Address 4'),
+                            TextEntry::make('postal_code')->label('Postal Code'),
+                            TextEntry::make('country_id')->label('Country'),
+                            TextEntry::make('site_name')->label('Site Name'),
+                            TextEntry::make('nearest_landmark')->label('Landmark'),
+                            TextEntry::make('longitude')->label('Longitude'),
+                            TextEntry::make('latitude')->label('Latitude'),
+                            TextEntry::make('companylandline_number')->label('Landline Number'),
+                            TextEntry::make('payment_mode')->label('Payment Mode'),
+                        ])->columns(2),
+         
+                    ]),
 
-
-
-                        TextEntry::make('approved_credit_value')->label('Credit Value')->default(function(){
-                            $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->get()->last();
-                            if($comments==null){
-                                return 'N/A';
-                            }
-                            else{
-                                return $comments->approved_credit_value;
+                    // Section::make('ADDITIONAL INFORMATION')
+                    //         ->schema([
+                                               
+                    //         TextEntry::make('payment_terms_id')->label('Payment Terms')->default(function(){
+                    //         $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->orderBy('id','desc')->first();
+                            
+                    //         if($comments==null){
+                    //             return 'N/A';
+                    //         }
+                    //         else{
+                    //             return PaymentTerms::query()->where('id',$comments->payment_terms_id)->value('payment_term_name');
     
-                            }
-                        }),
-                                ])->columns(2),
+                    //         }
+                    //     }  ),
+                    //     TextEntry::make('customer_categories_id')->label('Customer Class')->default(function(){
+                    //         $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->get()->last();
+                    //         if($comments==null){
+                    //             return 'N/A';
+                    //         }
+                    //         else{
+                    //             return CustomerCategories::query()->where('id',$comments->customer_categories_id)->value('customer_categories_name');
+    
+                    //         }
+                    //     }),
+                    //     TextEntry::make('freight_terms_id')->label('Freight Terms')->default(function(){
+                    //         $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->get()->last();
+                    //         if($comments==null){
+                    //             return 'N/A';
+                    //         }
+                    //         else{
+                    //             return FreightTerms::query()->where('id',$comments->freight_terms_id)->value('name');
+    
+                    //         }
+                    //     }),
+                    //     TextEntry::make('account_type_id')->label('Customer Type')->default(function(){
+                    //         $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->orderBy('id','desc')->first();
+                    //         if($comments==null){
+                    //             return 'N/A';
+                    //         }
+                    //         else{
+                    //             return AccountType::query()->where('id',$comments->account_type_id)->value('type');
+    
+                    //         }
+                    //     }),
+
+                    //     TextEntry::make('sales_territory_id')->label('Sales Territory')->default(function(){
+                    //         $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->get()->last();
+                    //         if($comments==null){
+                    //             return 'N/A';
+                    //         }
+                    //         else{
+                    //             return SalesTerritory::query()->where('id',$comments->sales_territory_id)->value('sales_territory');
+    
+                    //         }
+                    //     }),
+                    //     TextEntry::make('sales_representative_id')->label('Sales Representative')->default(function(){
+                    //         $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->get()->last();
+                    //         if($comments==null){
+                    //             return 'N/A';
+                    //         }
+                    //         else{
+                    //             return SalesRepresentative::query()->where('id',$comments->sales_representative_id)->value('sales_representative');
+    
+                    //         }
+                    //     }),
+                    //     TextEntry::make('collector_id')->label('Collector')->default(function(){
+                    //         $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->orderBy('id','desc')->first();
+                    //         if($comments==null){
+                    //             return 'N/A';
+                    //         }
+                    //         else{
+                    //             return Collector::query()->where('id',$comments->collector_id)->value('collector_name');
+    
+                    //         }
+                    //     }),
+
+                    //     TextEntry::make('price_list_id')->label('Price List')->default(function(){
+                    //         $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->get()->last();
+                    //         if($comments==null){
+                    //             return 'N/A';
+                    //         }
+                    //         else{
+                    //             return PriceList::query()->where('id',$comments->price_list_id)->value('Price_list_name');
+    
+                    //         }
+                    //     }),
+                    //     TextEntry::make('order_type_id')->label('OrderType')->default(function(){
+                    //         $comments = ApprovalComment::query()->where('customer_sites_id',$this->getRecord()->id)->orderBy('id','desc')->first();
+                    //         if($comments==null){
+                    //             return 'N/A';
+                    //         }
+                    //         else{
+                    //             return OrderType::query()->where('id',$comments->order_type_id)->value('order_type');
+    
+                    //         }
+                    //     }),
+
+
+
+
+                    //             ])->columns(2),
                
                     Section::make('CUSTOMER DOCUMENTS')
                     ->schema([
@@ -766,14 +864,18 @@ class ViewCustomerSites extends ViewRecord
         foreach ($statusTable as $key => $value) {
             if ($value['status'] == 'approved') {
                 $value['status'] = 'Approved by ' . User::query()->where('id', $value['user_id'])->value('name');
+                $value['statuss'] = User::query()->where('id', $value['user_id'])->value('name');
             } else if ($value['status'] == 'rejected') {
                 $value['status'] = 'Rejected by ' . User::query()->where('id', $value['user_id'])->value('name');
+                $value['statuss'] = User::query()->where('id', $value['user_id'])->value('name');
             } else {
                 $value['status'] = 'Pending verification from ' . User::query()->where('id', $value['user_id'])->value('name');
+                $value['statuss'] = User::query()->where('id', $value['user_id'])->value('name');
             }
             $statusArray[$start] = [
 
                 'status' => $value['status'],
+                'updated_by' =>$value['statuss'],
                 'updated_at' => Carbon::parse($value['updated_at']),
                 'comment' => $value['comment'],
             ];
