@@ -321,8 +321,8 @@ class ViewCustomerSites extends ViewRecord
                                     FileUpload::make('bank_details')
                                         ->label('Bank Details')
                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv'])
-                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv Maximum size -> 10MB")
-                                        ->maxSize(10000) // Set max size to 10MB
+                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv Maximum size -> 1MB")
+                                        ->maxSize(1000) // Set max size to 10MB
                                         ->preserveFilenames(), // Make the file publicly readable
                                     TextInput::make('bank_swift')
                                         ->label('Swift')
