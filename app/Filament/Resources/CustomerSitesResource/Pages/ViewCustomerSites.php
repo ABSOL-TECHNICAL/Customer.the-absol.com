@@ -289,7 +289,7 @@ class ViewCustomerSites extends ViewRecord
                         ->default(function(Model $record){
                             $Update = Customer::query()->where('id',$record->customer_id)->value('customer_last_update');
                             if($Update==null){
-                                return 'NOT UPDATED YET';
+                                return 'Not Updated Yet';
                             }
                             else{
                                  $upd= Customer::query()->where('id',$record->customer_id)->value('customer_last_update');
