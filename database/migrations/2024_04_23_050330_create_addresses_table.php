@@ -2,6 +2,8 @@
 
 use App\Models\Customer;
 use App\Models\CustomerSites;
+use App\Models\KenyaCities;
+use App\Models\Territory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,8 +27,8 @@ return new class extends Migration
             $table->string('location_type')->nullable();
             $table->string('site_name')->nullable();
             $table->foreignId('country_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('kenya_cities_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignId('territory_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(KenyaCities::class)->nullable()->constrained()->cascadeOnDelete(); 
+            $table->foreignIdFor(Territory::class)->nullable()->constrained()->cascadeOnDelete(); 
             $table->string('nearest_landmark')->nullable();
             $table->string('companylandline_number')->nullable();
             $table->string('postal_code')->nullable();

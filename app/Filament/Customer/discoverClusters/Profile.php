@@ -19,7 +19,7 @@ class Profile extends Cluster
                 ->value('customer_oracle_sync_site');
                 // dd($supplierSiteSynced);
  
-            if ($customerSiteSynced === 1) {
+            if ($customerSiteSynced == 1) {
                 return true;
             }
         }

@@ -20,6 +20,7 @@ use App\Models\AccountType;
 use App\Models\CustomerCategories;
 use App\Models\OrderType;
 use App\Models\PriceList;
+use App\Models\SalesTerritory;
 use App\Models\SalesRepresentative;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -89,7 +90,9 @@ public static function create(CustomerSites $site, $attributes = [])
         $attributes['ADD_LINE2'] = $address->address_2;
         $attributes['ADD_LINE3'] = $address->address_3;
         $attributes['ADD_LINE4'] = $address->address_4;
-        $attributes['STATE'] = '';
+        $attributes['STATE'] = Territory::query()
+            ->where('id', $address->territory_id)
+            ->value('territory');
         $attributes['POSTAL_CODE'] = $address->postal_code;
         $attributes['PAYMENT_TERMS'] = PaymentTerms::query()
             ->where('id', $comments->payment_terms_id)
@@ -100,9 +103,12 @@ public static function create(CustomerSites $site, $attributes = [])
         $attributes['OPERATING_UNIT'] = 'Pwani Oil Products Limited';
         $attributes['BILL_TO_SITE'] = $address->location_name;
         $attributes['SHIP_TO_SITE'] = $address->location_name;
+        
         $attributes['SC_PERSON'] = SalesRepresentative::query()
             ->where('id', $comments->sales_representative_id)
             ->value('sales_representative');
+            
+            
         $attributes['ATTRIBUTE1'] = '';
         $attributes['ATTRIBUTE2'] = mb_strimwidth($legalInformation->business_permit_number,0, 30, '');
         $attributes['ATTRIBUTE3'] = mb_strimwidth($legalInformation->business_permit_issue_expiry_date,0, 30, '');
@@ -118,9 +124,12 @@ public static function create(CustomerSites $site, $attributes = [])
         $attributes['CREDIT_CHECK'] = '';
         $attributes['CREATION_DATE']=date('m/d/Y h:i:s',time());
 
-        $attributes['SALES_TERRITORY'] = Territory::query()
-            ->where('id', $address->territory_id)
-            ->value('territory');
+        $attributes['SALES_TERRITORY'] = SalesTerritory::query()
+            ->where('id', $comments->sales_territory_id)
+            ->value('sales_territory');
+            
+            
+            
         $attributes['FREIGHT_TERM'] = FreightTerms::query()
             ->where('id', $comments->freight_terms_id)
             ->value('name');
@@ -195,7 +204,7 @@ public static function create(CustomerSites $site, $attributes = [])
             }
         }
     }
-    //   dd( $attributes);   
+    //    dd( $attributes);   
 
         if (empty($attributes)) {
             throw new \Exception('Error: $attributes is empty or incomplete.');
