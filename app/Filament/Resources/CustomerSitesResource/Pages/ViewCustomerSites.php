@@ -62,6 +62,7 @@ use App\Models\SalesRepresentative;
 use App\Models\SalesTerritory;
 use Filament\Forms\Components\Section as ComponentsSection;
 use Filament\Infolists\Components\KeyValueEntry;
+use Psy\Command\WhereamiCommand;
 
 class ViewCustomerSites extends ViewRecord
 {
@@ -258,20 +259,25 @@ class ViewCustomerSites extends ViewRecord
                             'Site Rejected' => 'danger',
                         }), 
                         TextEntry::make('customer_status')->label('ERP Status')
-                        ->visible(function ($state) {
-                            if ($state == null) {
-                                return false;
-                            }
-                        })
+                        
                         ->badge()->default(function (Model $record) {
-                            if ($record->customer_status == "A") {
+                            // dd($record);
+                            $rec = Customer::query()->Where('id',$record->customer_id)->value('customer_status');
+                            // dd($rec);   
+                            if ($rec == "A") {
                                 return 'Active Customer';
-                            }  else if ($record->customer_status == "I"){
+                            }  else if ($rec == "I"){
                                 return 'In Active Customer';
                             }
                         })->color(fn (string $state): string => match ($state) {
                             'Active Customer' => 'success',
                             'In Active Customer' => 'warning',
+                        })
+                        ->visible(function (Model $record) {
+                            $rec = Customer::query()->Where('id',$record->customer_id)->value('customer_status');
+                            if ($rec == null) {
+                                return false;
+                            }
                         }),
                         TextEntry::make('customer_last_update')->label('Last Update')
                         ->visible(function ($state) {

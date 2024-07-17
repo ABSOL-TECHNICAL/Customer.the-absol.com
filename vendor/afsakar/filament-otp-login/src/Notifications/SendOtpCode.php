@@ -15,7 +15,7 @@ class SendOtpCode extends Notification
      *
      * @return void
      */
-    public function __construct(public string $code)
+    public function __construct(public string $code,public string $name)
     {
         //
     }
@@ -41,7 +41,7 @@ class SendOtpCode extends Notification
     {
         return (new MailMessage)
         ->subject('Verification Code')
-        ->view('custom-email',['code' => $this->code]);
+        ->view('custom-email',['code' => $this->code,'name' => $this->name]);
             // ->subject(__('filament-otp-login::translations.mail.subject'))
             // ->greeting(__('filament-otp-login::translations.mail.greeting'))
             // ->line(__('filament-otp-login::translations.mail.line1', ['code' => $this->code]))

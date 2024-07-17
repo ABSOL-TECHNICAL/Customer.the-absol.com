@@ -185,6 +185,7 @@ class CustomerRegister extends Register
 
         OtpCode::updateOrCreate([
             'email' => $data['email'],
+            'name' => $data['name'],
         ], [
             'code' => $this->otpCode,
             'expires_at' => now()->addSeconds(config('filament-otp-login.otp_code.expires')),
@@ -203,7 +204,7 @@ class CustomerRegister extends Register
 
         $this->generateCode();
 
-        $this->sendOtpToUser($this->otpCode);
+        $this->sendOtpToUser($this->otpCode,$this->name);
 
         $this->step = 2;
     }
@@ -215,16 +216,17 @@ class CustomerRegister extends Register
 
         $this->generateCode();
 
-        $this->sendOtpToUser($this->otpCode);
+        $this->sendOtpToUser($this->otpCode,$this->name);
     }
 
-    protected function sendOtpToUser(string $otpCode): void
+    protected function sendOtpToUser(string $otpCode,string $name): void
     {
-        $this->email = $this->data['email'];
+        // $this->email = $this->data['email'];
+        $names = $this->data['name'];
 
         // $this->name=Customer::query()->where('email',$this->email)->value('name');
         
-        $this->notify(new SendOtpCode($otpCode));
+        $this->notify(new SendOtpCode($otpCode,$names));
 
         Notification::make()
             ->title(__('filament-otp-login::translations.notifications.title'))

@@ -87,7 +87,7 @@
 
 
 
-            <p class="otp-code">Hi User <br> Your Registration OTP is: {{ $code }}</p>
+            <p class="otp-code">Hi {{ $name }} <br> Your Registration OTP is: {{ $code }}</p>
 
             <p>This code will be valid for 120 seconds.</p>
             <p>If you did not request a code, please ignore this email.</p>
