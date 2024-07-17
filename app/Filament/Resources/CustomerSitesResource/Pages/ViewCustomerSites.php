@@ -273,16 +273,13 @@ class ViewCustomerSites extends ViewRecord
                             'Site Rejected' => 'danger',
                         }), 
                         TextEntry::make('customer_status')->label('ERP Status')
-                        ->visible(function ($state) {
-                            if ($state == null) {
-                                return false;
-                            }
-                        })
                         ->badge()->default(function (Model $record) {
                             $rec = Customer::query()->Where('id',$record->customer_id)->value('customer_status');
                             if ($rec == "A") {
                                 return 'Active Customer';
                             }  else if ($rec == "I"){
+                                return 'In Active Customer';
+                            }else{
                                 return 'In Active Customer';
                             }
                         })->color(fn (string $state): string => match ($state) {
