@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('mobile')->nullable();
             $table->string('customer_number')->nullable();
             $table->string('customer_account_id')->nullable();
+            $table->string('customer_status')->nullable();
+            $table->timestamp('customer_last_update')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

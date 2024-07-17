@@ -253,6 +253,28 @@ class ViewCustomerSites extends ViewRecord
                             'Site is Pending Approval' => 'warning',
                             'Site Rejected' => 'danger',
                         }), 
+                        TextEntry::make('customer_status')->label('ERP Status')
+                        ->visible(function ($state) {
+                            if ($state == null) {
+                                return false;
+                            }
+                        })
+                        ->badge()->default(function (Model $record) {
+                            if ($record->customer_status == "A") {
+                                return 'Active Customer';
+                            }  else if ($record->customer_status == "I"){
+                                return 'In Active Customer';
+                            }
+                        })->color(fn (string $state): string => match ($state) {
+                            'Active Customer' => 'success',
+                            'In Active Customer' => 'warning',
+                        }),
+                        TextEntry::make('customer_last_update')->label('Last Update')
+                        ->visible(function ($state) {
+                            if ($state == null) {
+                                return false;
+                            }
+                        }),
                     ])->columns(2),
 
                     Section::make('LEGAL INFORMATION')

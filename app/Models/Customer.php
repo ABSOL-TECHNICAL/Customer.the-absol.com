@@ -26,6 +26,8 @@ class Customer extends Authenticatable
         'country_id',
         'mobile',
         'customer_account_id',
+        'customer_status',
+        'customer_last_update',
     ];
  
     protected $hidden = [
