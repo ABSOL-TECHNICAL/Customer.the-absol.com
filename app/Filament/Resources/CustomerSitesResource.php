@@ -457,38 +457,38 @@ class CustomerSitesResource extends Resource
                                                         ->label('Years in Business'),
                                                     Forms\Components\FileUpload::make('certificate_of_incorporation_copy')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
-                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 10MB")
-                                                        ->maxSize(10000)
+                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
+                                                        ->maxSize(1000)
                                                         ->preserveFilenames()->required()->label('Certificate of Incorporation Copy'),
                                                     Forms\Components\FileUpload::make('pin_certificate_copy')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
-                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 10MB")
-                                                        ->maxSize(10000)
+                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
+                                                        ->maxSize(1000)
                                                         ->preserveFilenames()->label('Pin Certificate Copy')->required(),
                                                     Forms\Components\FileUpload::make('business_permit_copy')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
-                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 10MB")
-                                                        ->maxSize(10000)
+                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
+                                                        ->maxSize(1000)
                                                         ->preserveFilenames()->label('Business Permit Copy')->required(),
                                                     Forms\Components\FileUpload::make('cr12_documents')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
-                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 10MB")
-                                                        ->maxSize(10000)
+                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
+                                                        ->maxSize(1000)
                                                         ->preserveFilenames()->label('CR12 Document')->required(),
                                                     Forms\Components\FileUpload::make('passport_ceo')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
-                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 10MB")
-                                                        ->maxSize(10000)
+                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
+                                                        ->maxSize(1000)
                                                         ->preserveFilenames()->label('Passport/National ID of Director/CEO')->required(),
                                                     Forms\Components\FileUpload::make('passport_photo_ceo')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
-                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 10MB")
-                                                        ->maxSize(10000)
+                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
+                                                        ->maxSize(1000)
                                                         ->preserveFilenames()->label('Passport size Photo of Director/ CEO ')->required(),
                                                     Forms\Components\FileUpload::make('statement')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
-                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 10MB")
-                                                        ->maxSize(10000)
+                                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
+                                                        ->maxSize(1000)
                                                         ->preserveFilenames()->label('Statement')->required(),
                                                         
                                                 ])
@@ -511,8 +511,8 @@ class CustomerSitesResource extends Resource
                                             ->pluck('document_type_name', 'id'))->required(),
                                     Forms\Components\FileUpload::make('document')
                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
-                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 10MB")
-                                        ->maxSize(10000)
+                                        ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
+                                        ->maxSize(1000)
                                         ->preserveFilenames()
                                         ->label('Document')->required(),
                                     Forms\Components\Textarea::make('description')
