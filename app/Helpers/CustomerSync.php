@@ -1,16 +1,16 @@
 <?php
-
+ 
 namespace App\Helpers;
-
+ 
 use App\Models\Customer;
 use App\Models\CustomerSites;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-
+ 
 class CustomerSync
 {
     protected static $api_url = 'http://41.72.204.245/customer_dev_oracle_connector/index.php';
-
+ 
     /**
      * Fetch and update customer data.
      *
@@ -21,17 +21,17 @@ class CustomerSync
         $queryParams = [
             'func' => 'getLastRow',
         ];
-
+ 
         try {
             $response = Http::get(self::$api_url, $queryParams);
-
+ 
             if ($response->successful()) {
                 $rawResponse = $response->body();
                 Log::info('Raw API response', ['body' => $rawResponse]);
-
+ 
                 $customersData = json_decode($rawResponse, true);
                 Log::info('Decoded API response', ['customersData' => $customersData]);
-
+ 
                 if (json_last_error() === JSON_ERROR_NONE && is_array($customersData)) {
                     foreach ($customersData as $customerData) {
                         $this->updateCustomer($customerData);
@@ -50,7 +50,7 @@ class CustomerSync
             ]);
         }
     }
-
+ 
     /**
      * Update the customer record with the fetched data.
      *
@@ -61,15 +61,18 @@ class CustomerSync
     {
         // Update customer record
         $customer = Customer::where('id', $customerData['ATTRIBUTE5'])->first();
-
+ 
         if ($customer) {
             $customer->customer_number = $customerData['ACCOUNT_NUMBER'] ?? $customer->customer_number;
             $customer->customer_account_id = $customerData['CUST_ACCOUNT_ID'] ?? $customer->customer_account_id;
-            $customer->save();
+            $customer->customer_status=$customerData['STATUS'] ?? $customer->customer_status;
+            $customer->customer_last_update=$customerData['LAST_UPDATE_DATE'] ?? $customer->customer_last_update;
 
+            $customer->save();
+ 
            
             $customerSite = CustomerSites::where('customer_id', $customer->id)->first();
-
+ 
             if ($customerSite) {
                 $customerSite->customer_oracle_sync_site = 1;
                 $customerSite->save();

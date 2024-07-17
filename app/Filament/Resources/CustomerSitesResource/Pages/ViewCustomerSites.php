@@ -217,10 +217,23 @@ class ViewCustomerSites extends ViewRecord
             ->schema([
                 Section::make('PHYSICAL INFORMATION')
                     ->schema([
-                        TextEntry::make('customer_number')->label('Number')
+                        TextEntry::make('customer_number')->label('Customer Number')
+                        ->default(function(){
+                            $record=$this->getRecord();
+                            $customerNumber=Customer::query()->where('id',$record->customer_id)->value('customer_number');
+                            if($customerNumber!=null){
+                                return $customerNumber;
+                            }
+                            else{
+                                return null;
+                            } 
+                        })
                         ->visible(function ($state) {
                             if ($state == null) {
                                 return false;
+                            }
+                            else{
+                                return true;
                             }
                         }),
                         TextEntry::make('name')->label('Name'),
@@ -244,8 +257,9 @@ class ViewCustomerSites extends ViewRecord
                         TextEntry::make('Registration_date')->default($physical->created_at ?? ''), 
                         TextEntry::make('site_status')->label('Site Status')
                         ->badge()->default(function (Model $record) {
+                            // dd($record);
                             if ($record->customer_oracle_sync_site == 1) {
-                                // dd();
+                                // dd($record);
                                 return 'Site Approved';
                             } else if ($record->status->value == 'rejected') {
                                 return 'Site Rejected';
@@ -259,14 +273,15 @@ class ViewCustomerSites extends ViewRecord
                             'Site Rejected' => 'danger',
                         }), 
                         TextEntry::make('customer_status')->label('ERP Status')
-                        
+                        ->visible(function ($state) {
+                            if ($state == null) {
+                                return false;
+                            }
+                        })
                         ->badge()->default(function (Model $record) {
-                            // dd($record);
-                            $rec = Customer::query()->Where('id',$record->customer_id)->value('customer_status');
-                            // dd($rec);   
-                            if ($rec == "A") {
+                            if ($record->customer_status == "A") {
                                 return 'Active Customer';
-                            }  else if ($rec == "I"){
+                            }  else if ($record->customer_status == "I"){
                                 return 'In Active Customer';
                             }
                         })->color(fn (string $state): string => match ($state) {
@@ -280,11 +295,21 @@ class ViewCustomerSites extends ViewRecord
                             }
                         }),
                         TextEntry::make('customer_last_update')->label('Last Update')
-                        ->visible(function ($state) {
-                            if ($state == null) {
-                                return false;
+                        ->default(function(Model $record){
+                            $Update = Customer::query()->where('id',$record->customer_id)->value('customer_last_update');
+                            if($Update==null){
+                                return 'Not Updated Yet';
+                            }
+                            else{
+                                 $upd= Customer::query()->where('id',$record->customer_id)->value('customer_last_update');
+                                 return  $upd;
                             }
                         }),
+                        // ->visible(function ($state) {
+                        //     if ($state == null) {
+                        //         return false;
+                        //     }
+                        // }),
                     ])->columns(2),
 
                     Section::make('LEGAL INFORMATION')
