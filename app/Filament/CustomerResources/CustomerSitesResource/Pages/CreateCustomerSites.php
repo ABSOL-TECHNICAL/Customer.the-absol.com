@@ -113,6 +113,9 @@ class CreateCustomerSites extends CreateRecord
                        $addressRecord->companylandline_number=$value['companylandline_number'];
                        $addressRecord->postal_code=$value['postal_code'];
                        $addressRecord->payment_mode=$value['payment_mode'];
+                       $addressRecord->kenya_cities_id=$value['kenya_cities_id'];
+                       $addressRecord->territory_id=$value['territory_id'];
+                       
                        if($value['country_id']!=110){
                         $addressRecord->kenya_cities_id=null;
                         $addressRecord->territory_id=null;

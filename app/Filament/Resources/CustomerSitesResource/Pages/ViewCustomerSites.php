@@ -105,7 +105,7 @@ class ViewCustomerSites extends ViewRecord
         $other = OtherDocuments::query()->where('customer_id',$additionalData->customer_id)->get()->toArray();
         $addressRecord=Address::query()->where('customer_id',$additionalData->customer_id)->get()->toArray();
 
-
+        // dd($additionalData);
 
         $this->record['name'] = $physicalRecord->name;
         $this->record['email'] = $physicalRecord->email;
@@ -116,6 +116,8 @@ class ViewCustomerSites extends ViewRecord
         $address = [];
         foreach ($addressRecord as $key => $value) {
             $value['country_id'] = Country::query()->where('id', $value['country_id'])->value('country_name');
+            $value['kenya_cities_id'] = KenyaCities::query()->where('id', $value['kenya_cities_id'])->value('city');
+            $value['territory_id'] = Territory::query()->where('id',$value['territory_id'])->value('territory');
             $address[$key] = $value;
         }
         $this->record['Address'] = $address;
@@ -139,6 +141,7 @@ class ViewCustomerSites extends ViewRecord
             $value['currency_id'] = Currency::query()->where('id', $value['currency_id'])->value('currency_name');
             $bankInformations[$key] = $value;
         }
+
         // dd($bankInformations);
     
         $this->record['Bank Information'] = $bankInformations;
@@ -240,7 +243,8 @@ class ViewCustomerSites extends ViewRecord
                         TextEntry::make('Registration_date')->default($physical->created_at ?? ''), 
                         TextEntry::make('site_status')->label('Site Status')
                         ->badge()->default(function (Model $record) {
-                            if ($record->status->value == "approved") {
+                            if ($record->customer_oracle_sync_site == 1) {
+                                // dd();
                                 return 'Site Approved';
                             } else if ($record->status->value == 'rejected') {
                                 return 'Site Rejected';
@@ -613,7 +617,7 @@ class ViewCustomerSites extends ViewRecord
                             }
                         }),
                         ])->columns(2),
-  
+                      
                         RepeatableEntry::make('Address')
                         ->schema([
                             TextEntry::make('location_name')->label('Location Name'),
@@ -623,7 +627,9 @@ class ViewCustomerSites extends ViewRecord
                             TextEntry::make('address_3')->label('Address 3'),
                             TextEntry::make('address_4')->label('Address 4'),
                             TextEntry::make('postal_code')->label('Postal Code'),
-                            TextEntry::make('country_id')->label('Country'),
+                            TextEntry::make('country_id')->label('Country'),  
+                            TextEntry::make('kenya_cities_id')->label('Region'),
+                            TextEntry::make('territory_id')->label('Territory'),                         
                             TextEntry::make('site_name')->label('Site Name'),
                             TextEntry::make('nearest_landmark')->label('Landmark'),
                             TextEntry::make('longitude')->label('Longitude'),
