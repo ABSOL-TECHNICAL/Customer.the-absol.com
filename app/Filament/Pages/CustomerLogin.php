@@ -179,11 +179,11 @@ class CustomerLogin extends Login
     {
         $this->email = $this->data['email'];
         
-        $this->name=Customer::query()->where('email',$this->email)->value('name');
+        // $this->name=Customer::query()->where('email',$this->email)->value('name');
         
         // $this->name=$this->data['name'];
 
-        $this->notify(new SendOtpCode($otpCode,$this->name));
+        $this->notify(new SendOtpCode($otpCode));
 
         Notification::make()
             ->title(__('filament-otp-login::translations.notifications.title'))

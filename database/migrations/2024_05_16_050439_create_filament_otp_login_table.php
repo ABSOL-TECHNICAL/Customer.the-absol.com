@@ -14,7 +14,6 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->string('email');
-            $table->string('name');
             $table->dateTime('expires_at');
             $table->timestamps();
         });
