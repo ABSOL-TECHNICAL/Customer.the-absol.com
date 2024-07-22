@@ -474,7 +474,7 @@ class CustomerSitesResource extends Resource
                                                 Forms\Components\Section::make('Legal Information')->schema([
                                                     Forms\Components\TextInput::make('certificate_of_incorporation')
                                                         ->required()
-                                                        ->regex('/^[a-zA-Z0-9\s]+$/')
+                                                        ->regex('/^[a-zA-Z0-9\s!@#\$%\^&\*\(\)_\-\+=\{\}\[\];"<>,]+$/')
                                                         ->label('Incorporation Certificate'),
                                                         DatePicker::make('certificate_of_incorporation_issue_date')
                                                         ->label('Date of Registration')

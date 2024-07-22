@@ -281,6 +281,7 @@ class DatabaseSeeder extends Seeder
             BranchesSeeder::class,
             PermissionSeeder::class,
             TerritorySeeder::class,
+            SettingsTableSeeder::class
         ]);
     }
 }
