@@ -293,6 +293,7 @@ class CustomerSitesResource extends Resource
                                             ->label('Bank Status')
                                             ->default(1)->readOnly(), 
                                             Forms\Components\Select::make('bank_id')
+                                            ->label('Bank')
                                             ->required()
                                             ->options(fn (Get $get): Collection => Bank::query()
                                                 ->where('bank_status', '1')
@@ -302,7 +303,7 @@ class CustomerSitesResource extends Resource
                                             }),
 
 
-                                            
+
 
                                         // Forms\Components\Select::make('branch_id')
                                         //     // ->relationship(name:'branch',titleAttribute:'branch_name'),

@@ -355,6 +355,7 @@ class ViewCustomerSites extends ViewRecord
                                             ->label('Bank Status')
                                             ->default(1)->readOnly(), 
                                             Select::make('bank_id')
+                                            ->label('Bank')
                                             ->required()
                                             ->options(fn (Get $get): Collection => Bank::query()
                                                 ->where('bank_status', '1')
