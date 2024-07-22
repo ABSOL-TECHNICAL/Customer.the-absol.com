@@ -83,7 +83,7 @@ class CustomerSitesResource extends Resource
         $currency = Setting::get('currency') === '1';
         $bank = Setting::get('bank') === '1';
         $accountNumber = Setting::get('bank_account_number') === '1';
-        $bankCode = Setting::get('bank_code') === '1';
+        $bankCode= Setting::get('bank_code') === '1';
         $iban = Setting::get('iban') === '1';
         $country = Setting::get('country') === '1';
         $territory=Setting::get('territory_id') ==='1';

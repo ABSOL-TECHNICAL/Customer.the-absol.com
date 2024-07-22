@@ -43,7 +43,7 @@ class SettingsTableSeeder extends Seeder
         Setting::updateOrCreate(['key' =>'longitude'],['value' =>'','field_name'=>'Longitude']);
         Setting::updateOrCreate(['key' => 'approx_turnover_for_last_year'],['value'=>'1','field_name'=>'Approx Turn Over For Last Year (Millions in kenya shilling)']);
         Setting::updateOrCreate(['key' => 'bank_account_number'], ['value' => '1', 'field_name' => 'Account Number']);
-        Setting::updateOrCreate(['key' => 'bank_code'], ['value' => '1', 'field_name' => 'Bank Code']);
+        Setting::updateOrCreate(['key' => 'bank_code'], ['value' => '', 'field_name' => 'Bank Code']);
         Setting::updateOrCreate(['key' => 'iban'], ['value' => '', 'field_name' => 'IBAN']);
         Setting::updateOrCreate(['key' => 'country'], ['value' => '1', 'field_name' => 'Country']);
         Setting::updateOrCreate(['key' => 'bank_details'], ['value' => '1', 'field_name' => 'Bank Details']);
