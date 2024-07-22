@@ -113,6 +113,7 @@ use Traineratwot\FilamentOpenStreetMap\Forms\Components\MapInput;
 
 use Filament\Tables\Actions\DeleteAction;
 
+use App\Models\Setting;
 class CustomerSitesResource extends Resource
 {
 
@@ -132,6 +133,73 @@ class CustomerSitesResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $isRequired = Setting::get('form_field_required') === '1';
+        $isNameRequired = Setting::get('name_field_required') === '1';
+        $isEmailRequired = Setting::get('email_field_required') === '1';
+        $nearestLandmark = Setting::get('nearest_landmark') === '1';
+        $postalCode = Setting::get('postal_code') === '1';
+        $companyLandlineNumber = Setting::get('company_landline_number') === '1';
+        $siteName = Setting::get('site_name') === '1';
+        $locationName = Setting::get('location_name') === '1';
+        // $locationType = Setting::get('location_type')==='1';
+        $website = Setting::get('website') === '1';
+        $groupCompany = Setting::get('group_company') === '1';
+        $nameOfTheCompany = Setting::get('name_of_the_company') === '1';
+        $nameOfContactPerson=Setting::get('name_of_the_contact_person') ==='1';
+        $mobileNumber =Setting::get('mobile_number')==='1';
+        $companyTypes=Setting::get('company_types_id')==='1';
+        $yearsRelationship=Setting::get('year_relationship')==='1';
+        $approxTurnOver = Setting::get('approx_turnover_for_last_year')==='1';
+        $currency = Setting::get('currency') === '1';
+        $bank = Setting::get('bank') === '1';
+        $accountNumber = Setting::get('bank_account_number') === '1';
+        $bankCode = Setting::get('bank_code') === '1';
+        $iban = Setting::get('iban') === '1';
+        $document =Setting::get('document') === '1';
+        $country = Setting::get('country') === '1';
+        $territory=Setting::get('territory_id') ==='1';
+        $kenyaCities=Setting::get('kenya_cities_id')==='1';
+        $bankDetails = Setting::get('bank_details') === '1';
+        $swift = Setting::get('swift') === '1';
+        $bankingFacilities = Setting::get('banking_facilities') === '1';
+        $auditorName = Setting::get('auditor_name') === '1';
+        $contactPersonName = Setting::get('contact_person_name') === '1';
+        $financeEmailAddress = Setting::get('finance_email_address') === '1';
+        $telephoneNumber = Setting::get('telephone_number') === '1';
+        $financeMobileNumber = Setting::get('finance_mobile_number') === '1';
+        $certificateOfIncorporation = Setting::get('certificate_of_incorporation') === '1';
+        $certificateOfIncorporationIssueDate = Setting::get('certificate_of_incorporation_issue_date') === '1';
+        $dateOfRegistration = Setting::get('date_of_registration') === '1';
+        $businessPermitIssueExpiryDate = Setting::get('business_permit_issue_expiry_date') === '1';
+        $businessPermitNumber = Setting::get('business_permit_number') === '1';
+        $pinNumber = Setting::get('pin_number') === '1';
+        $yearsInBusiness = Setting::get('years_in_business') === '1';
+        $taxComplianceCertificate = Setting::get('tax_compliance_certificate') === '1';
+        $excemptionCategory = Setting::get('excemption_category') === '1';
+        $certificateOfIncorporationCopy = Setting::get('certificate_of_incorporation_copy') === '1';
+        $pinCertificateCopy = Setting::get('pin_certificate_copy') === '1';
+        $businessPermitCopy = Setting::get('business_permit_copy') === '1';
+        $cr12Documents = Setting::get('cr12_documents') === '1';
+        $passportCeo = Setting::get('passport_ceo') === '1';
+        $passportPhotoCeo = Setting::get('passport_photo_ceo') === '1';
+        $statement = Setting::get('statement') === '1';
+        $documentTypeStatus = Setting::get('document_type_status') === '1';
+        $description = Setting::get('description') === '1';
+        $ownerContactName = Setting::get('owner_contact_name') === '1';
+        $ownerContactEmailAddress = Setting::get('owner_contact_email_address') === '1';
+        $ownerContactPhoneNumber = Setting::get('owner_contact_phone_number') === '1';
+        $ceoContactName = Setting::get('ceo_contact_name') === '1';
+        $ceoContactEmailAddress = Setting::get('ceo_contact_email_address') === '1';
+        $ceoContactPhoneNumber = Setting::get('ceo_contact_phone_number') === '1';
+        $cfoName = Setting::get('CFO/FM Name') === '1';
+        $cfoContactEmailAddress = Setting::get('cfo_contact_email_address') === '1';
+        $cfoContactPhoneNumber = Setting::get('cfo_contact_phone_number') === '1';
+        $paymentContactName = Setting::get('payment_contact_name') === '1';
+        $paymentContactEmailAddress = Setting::get('payment_contact_email_address') === '1';
+        $paymentContactPhoneNumber = Setting::get('payment_contact_phone_number') === '1';
+        $authorizedContactName = Setting::get('authorized_contact_name') === '1';
+        $authorizedContactEmailAddress = Setting::get('authorized_contact_email_address') === '1';
+        $authorizedContactPhoneNumber = Setting::get('authorized_contact_phone_number') === '1';
         return $form
             ->schema([
                 //
@@ -141,30 +209,31 @@ class CustomerSitesResource extends Resource
                         ->schema([
                             Forms\Components\Section::make('Physical Information')->schema([
                                 Forms\Components\TextInput::make('name')
-                                    ->required()
+                                    ->required($isNameRequired)
                                     ->regex('/^[A-Z\s]+$/')
                                     ->label('Name')->afterStateUpdated(function ($state, $set) {
                                         $set('name', strtoupper($state));
                                     }),
                                 Forms\Components\TextInput::make('email')
                                     ->email()
-                                    ->required()
+                                    ->required($isEmailRequired)
                                     // ->helperText('The email must end with .com' )
                                     ->rules(['regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'])
                                     ->label('Email'),
                                 Forms\Components\TextInput::make('name_of_the_company')
-                                    ->required()
+                                    ->required($nameOfTheCompany)
                                     ->regex('/^[a-zA-Z0-9\s]+$/')
                                     ->label('Name of the Company')->afterStateUpdated(function ($state, $set) {
                                         $set('name_of_the_company', strtoupper($state));
                                        
                                     }),
                                 Forms\Components\TextInput::make('group_company_of')
-                                    ->required()
+                                    ->required($groupCompany)
                                     ->regex('/^[a-zA-Z\s]+$/')
                                     ->label('Group Company'),
                                 Forms\Components\TextInput::make('website')
                                     ->label('Website')
+                                    ->required($website)
                                     ->rules(['regex:/^(www\.)?[a-zA-Z0-9-]+\.(com|org|in|net|us|es|fr|io|co|edu|gov|info)(?:\/[^\s]*)?$/'])
                                     ->rules(['regex:/^(www\.)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/']),
                             ])->columns(2)
@@ -179,9 +248,9 @@ class CustomerSitesResource extends Resource
                             TextInput::make('location_name')
                             ->regex('/^[a-zA-Z\s]+$/')
                             ->label('Location Name')
-                            ->required(),
+                            ->required($locationName),
                         TextInput::make('site_name')
-                            ->required()
+                            ->required($siteName)
                             ->label('Site Name')
                             ->regex('/^[a-zA-Z\s]+$/'),
                         Textarea::make('address_1')->label('Address 1')->maxLength(230)->required(),
@@ -197,29 +266,30 @@ class CustomerSitesResource extends Resource
                             ->inlineLabel(false),
 
                         Select::make('country_id')
-                            ->relationship(name: 'country', titleAttribute: 'country_name')->required()
+                            ->relationship(name: 'country', titleAttribute: 'country_name')->required($country)
                             ->label('Country')
                             ->live()
                             ->default(static::getDefaultCountryId()),
                         Select::make('territory_id')
-                            ->relationship(name: 'Territory', titleAttribute: 'territory')->required()
+                            ->relationship(name: 'Territory', titleAttribute: 'territory')->required($territory)
                             ->label('Territory Name')
                             ->visible(fn (Get $get) => $get('country_id') == Country::where('country_name', 'Kenya')->first()->id ?? null),
                         Select::make('kenya_cities_id')
-                            ->relationship(name: 'KenyaCities', titleAttribute: 'city')->required()
+                            ->relationship(name: 'KenyaCities', titleAttribute: 'city')->required($kenyaCities)
                             ->label('Region')
                             ->visible(fn (Get $get) => $get('country_id') == Country::where('country_name', 'Kenya')->first()->id ?? null),
                         TextInput::make('companylandline_number')
                             ->label('Company landline number')
                             ->tel()
+                            ->required($companyLandlineNumber)
                             ->minLength(10)
                             ->maxLength(15),
                         TextInput::make('nearest_landmark')
-                            ->required()
+                            ->required($nearestLandmark)
                             ->label('Nearest Landmark')
                             ->regex('/^[a-zA-Z0-9\s]+$/'),
                         TextInput::make('postal_code')
-                            ->required()
+                            ->required($postalCode)
                             ->label('Postal Code')
                             ->tel()
                             ->minLength(4)
@@ -279,22 +349,33 @@ class CustomerSitesResource extends Resource
                                 Forms\components\Repeater::make('Business References')->label('Business References') ->schema([
                                 Forms\Components\TextInput::make('name_of_company')
                                     ->label('Company Name')
-                                    ->required()
+                                    ->required($nameOfTheCompany)
                                     ->regex('/^[a-zA-Z0-9\s]+$/'),
-                                Forms\Components\TextInput::make('name_of_the_contact_person')->label('Contact Person')->required()->regex('/^[a-zA-Z\s]+$/'),
+                                Forms\Components\TextInput::make('name_of_the_contact_person')
+                                    ->label('Contact Person')
+                                    ->required($nameOfContactPerson)
+                                    ->regex('/^[a-zA-Z\s]+$/'),
                                 Forms\Components\TextInput::make('email_address')
                                     ->label('Email')
                                     ->rules(['regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'])
-                                    ->email(),
-                                Forms\Components\TextInput::make('telephone_number')->label('Telephone Number')->required()->tel()->minLength(8),
-                                Forms\Components\TextInput::make('mobile_number')->label('Mobile Number')->required()->tel()->minLength(8),
+                                    ->email($isEmailRequired),
+                                Forms\Components\TextInput::make('telephone_number')
+                                    ->label('Telephone Number')
+                                    ->required($telephoneNumber)
+                                    ->tel()->minLength(8),
+                                Forms\Components\TextInput::make('mobile_number')
+                                    ->label('Mobile Number')
+                                    ->required($mobileNumber)
+                                    ->tel()->minLength(8),
                                 Forms\Components\Select::make('company_types_id')
                                     ->options(fn (Get $get): Collection => CompanyTypes::query()
-                                        ->where('legal_information_restriction', '1')
-                                        ->pluck('company_type_name', 'id'))
-                                        ->label('Company Types')
+                                    ->where('legal_information_restriction', '1')
+                                    ->pluck('company_type_name', 'id'))
+                                    ->label('Company Types')
                                     ->required(),
-                                TextInput::make('year_relationship')->label('Years in Relationship')->required(),
+                                TextInput::make('year_relationship')
+                                    ->label('Years in Relationship')
+                                    ->required($yearsRelationship),
                                 ])->columns(2)
                             ])->columnSpanFull(),
                         ]),
@@ -308,23 +389,30 @@ class CustomerSitesResource extends Resource
                         ->schema([
                             Forms\Components\Section::make('Financials')->schema([
                                 Forms\Components\TextInput::make('approx_turnover_for_last_year')
-                                    ->required()
+                                    ->required($approxTurnOver)
                                     ->regex('/^[0-9\s]+$/')
                                     ->label('Approx Turn Over For Last Year (Millions in kenya shilling)'),
-                                Forms\Components\TextInput::make('name_of_auditor')->required()->label('Auditor Name')->regex('/^[a-zA-Z\s]+$/'),
-                                Forms\Components\TextInput::make('finance_contact_person')->required()->label('Contact Person Name')->regex('/^[a-zA-Z\s]+$/'),
+                                Forms\Components\TextInput::make('name_of_auditor')
+                                    ->required($auditorName)
+                                    ->label('Auditor Name')
+                                    ->regex('/^[a-zA-Z\s]+$/'),
+                                Forms\Components\TextInput::make('finance_contact_person')
+                                    ->required($contactPersonName)
+                                    ->label('Contact Person Name')
+                                    ->regex('/^[a-zA-Z\s]+$/'),
                                 Forms\Components\TextInput::make('finance_email_address')
-                                    ->required()
+                                    ->required($financeEmailAddress)
                                     ->label('Email')
                                     ->rules(['regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'])
                                     ->email(),
                                 Forms\Components\TextInput::make('finance_telephone_number')
                                     ->label('Telephone Number')
                                     ->tel()
+                                    ->required($telephoneNumber)
                                     ->minLength(8)
                                     ->rule('regex:/^\S*$/', 'The telephone number cannot contain spaces.'),
                                 Forms\Components\TextInput::make('finance_mobile_number')
-                                    ->required()
+                                    ->required($financeMobileNumber)
                                     ->label('Mobile Number')
                                     ->tel()
                                     ->minLength(8)
@@ -343,50 +431,82 @@ class CustomerSitesResource extends Resource
                                     ->schema([
                                         Forms\Components\Section::make('Key Management')->schema([
                                             Forms\Components\Section::make('Name of The Owner')->schema([
-                                                Forms\Components\TextInput::make('owner_contact_name')->label('Contact Name')->required()->regex('/^[a-zA-Z\s]+$/'),
+                                                Forms\Components\TextInput::make('owner_contact_name')
+                                                    ->label('Contact Name')
+                                                    ->required($ownerContactName)
+                                                    ->regex('/^[a-zA-Z\s]+$/'),
                                                 Forms\Components\TextInput::make('owner_contact_email_address')
                                                     ->label('Contact Email Address')
+                                                    ->required($ownerContactEmailAddress)
                                                     ->rules(['regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'])
                                                     ->email(),
-                                                Forms\Components\TextInput::make('owner_contact_phone_number')->label('Contact Phone Number')->tel()->minLength(8),
+                                                Forms\Components\TextInput::make('owner_contact_phone_number')
+                                                    ->label('Contact Phone Number')
+                                                    ->required($ownerContactPhoneNumber)
+                                                    ->tel()->minLength(8),
                                             
                                             ])->columns(3),
                                             Forms\Components\Section::make('Name of CEO/GM')->schema([
-                                                Forms\Components\TextInput::make('ceo_contact_name')->label('CEO/GM Name ')->required()->regex('/^[a-zA-Z\s]+$/'),
+                                                Forms\Components\TextInput::make('ceo_contact_name')->label('CEO/GM Name ')
+                                                    ->required($ceoContactName)
+                                                    ->regex('/^[a-zA-Z\s]+$/'),
                                                 Forms\Components\TextInput::make('ceo_contact_email_address')
                                                     ->label('Contact Email Address')
                                                     ->email()
+                                                    ->required($ceoContactEmailAddress)
                                                     ->rules(['regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/']),
-                                        Forms\Components\TextInput::make('ceo_contact_phone_number')->label('Contact Phone Number')->tel()->minLength(8),
+                                        Forms\Components\TextInput::make('ceo_contact_phone_number')
+                                                    ->label('Contact Phone Number')
+                                                    ->required( $ceoContactPhoneNumber)
+                                                    ->tel()->minLength(8),
                                                 
                                             ])->columns(3),
                                             Forms\Components\Section::make('Name of CFO/FM')->schema([
-                                                Forms\Components\TextInput::make('cfo_contact_name')->label('CFO/FM Name')->required()->regex('/^[a-zA-Z\s]+$/'),
+                                                Forms\Components\TextInput::make('cfo_contact_name')
+                                                    ->label('CFO/FM Name')
+                                                    ->required($cfoName)
+                                                    ->regex('/^[a-zA-Z\s]+$/'),
                                                 Forms\Components\TextInput::make('cfo_contact_email_address')
                                                     ->label('Contact Email Address')
                                                     ->email()
                                                     ->rules(['regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'])
-                                                    ->required(),
-                                                Forms\Components\TextInput::make('cfo_contact_phone_number')->label('Contact Phone Number')->tel()->minLength(8),
+                                                    ->required($cfoContactEmailAddress),
+                                                Forms\Components\TextInput::make('cfo_contact_phone_number')
+                                                    ->label('Contact Phone Number')
+                                                    ->required($cfoContactPhoneNumber)
+                                                    ->tel()->minLength(8),
                                                 
                                             ])->columns(3),
                                             Forms\Components\Section::make('Name of Person to follow up for Payment')->schema([
-                                                Forms\Components\TextInput::make('payment_contact_name')->label('Contact Name')->required()->regex('/^[a-zA-Z\s]+$/'),
+                                                Forms\Components\TextInput::make('payment_contact_name')
+                                                    ->label('Contact Name')
+                                                    ->required($paymentContactName)->regex('/^[a-zA-Z\s]+$/'),
                                                 Forms\Components\TextInput::make('payment_contact_email_address')
                                                     ->label('Contact Email Address')
                                                     ->email()
                                                     ->rules(['regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'])
-                                                    ,
-                                                Forms\Components\TextInput::make('payment_contact_phone_number')->label('Contact Phone Number')->tel()->minLength(8)->required(),
+                                                    ->required($paymentContactEmailAddress),
+                                                Forms\Components\TextInput::make('payment_contact_phone_number')
+                                                    ->label('Contact Phone Number')
+                                                    ->tel()->minLength(8)
+                                                    ->required($paymentContactPhoneNumber),
                                                 
                                             ])->columns(3),
                                             Forms\Components\Section::make('Name of Person Authorized to place PO')->schema([
-                                                Forms\Components\TextInput::make('authorized_contact_name')->label('Contact Name ')->required()->regex('/^[a-zA-Z\s]+$/'),
+                                                Forms\Components\TextInput::make('authorized_contact_name')
+                                                    ->label('Contact Name ')
+                                                    ->required($authorizedContactName)
+                                                    ->regex('/^[a-zA-Z\s]+$/'),
                                                 Forms\Components\TextInput::make('authorized_contact_email_address')
                                                     ->label('Contact Email Address')
                                                     ->email()
+                                                    ->required($authorizedContactEmailAddress)
                                                     ->rules(['regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/']),                                        
-                                                Forms\Components\TextInput::make('authorized_contact_phone_number')->label('Contact Phone Number')->tel()->minLength(8)->required(),
+                                                Forms\Components\TextInput::make('authorized_contact_phone_number')
+                                                    ->label('Contact Phone Number')
+                                                    ->tel()
+                                                    ->minLength(8)
+                                                    ->required($authorizedContactPhoneNumber),
                                                 
                                             ])->columns(3),
                                             Forms\Components\TextArea::make('any_other_remarks')->label('Any Other Remarks')->columnSpan('full'),
@@ -405,14 +525,14 @@ class CustomerSitesResource extends Resource
                                             ->schema([
                                                 Forms\Components\Section::make('Legal Information')->schema([
                                                     Forms\Components\TextInput::make('certificate_of_incorporation')
-                                                        ->required()
-                                                        ->regex('/^[a-zA-Z0-9\s]+$/')
+                                                        ->required($certificateOfIncorporation)
+                                                        ->regex('/^[a-zA-Z0-9\s!@#\$%\^&\*\(\)_\-\+=\{\}\[\];"<>,]+$/')
                                                         ->label('Incorporation Certificate'),
                                                         DatePicker::make('certificate_of_incorporation_issue_date')
                                                         
                                                          ->displayFormat('d/m/Y')
                                                         ->label('Date of Registration')
-                                                        ->required()
+                                                        ->required($certificateOfIncorporationIssueDate)
                                                         ->afterStateUpdated(function (Get $get, Set $set, $state) {
                                                             // Calculate years in business when the registration date is updated
                                                             $issueDate = Carbon::parse($state);
@@ -424,7 +544,7 @@ class CustomerSitesResource extends Resource
                                                     
                                                     DatePicker::make('business_permit_issue_expiry_date')
                                                         ->label('Business Permit Expiry Date')
-                                                        ->required()
+                                                        ->required($businessPermitIssueExpiryDate)
                                                         ->minDate(function (Get $get) {
                                                             // Ensure the expiry date is after the incorporation issue date
                                                             return $get('certificate_of_incorporation_issue_date');
@@ -439,12 +559,12 @@ class CustomerSitesResource extends Resource
                                                         }),
                                                         // ->native(false),
                                                     Forms\Components\TextInput::make('business_permit_number')
-                                                        ->required()
+                                                        ->required($businessPermitNumber)
                                                         ->regex('/^[A-Za-z0-9\s]+$/')
                                                         ->minLength(5)
                                                         ->label('Business Permit Number'),
                                                     Forms\Components\TextInput::make('pin_number')
-                                                        ->required()
+                                                        ->required($pinNumber)
                                                         ->regex('/^[a-zA-Z0-9\s]+$/')
                                                         ->minLength(6)
                                                         ->maxLength(10)
@@ -454,42 +574,52 @@ class CustomerSitesResource extends Resource
                                                         ->extraInputAttributes([
                                                             'style' => 'background-color: #f0f0f0; color: #333;',
                                                         ])
+                                                        ->required($yearsInBusiness)
                                                         ->label('Years in Business'),
                                                     Forms\Components\FileUpload::make('certificate_of_incorporation_copy')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
                                                         ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
                                                         ->maxSize(1000)
-                                                        ->preserveFilenames()->required()->label('Certificate of Incorporation Copy'),
+                                                        ->preserveFilenames()
+                                                        ->required($certificateOfIncorporationCopy)
+                                                        ->label('Certificate of Incorporation Copy'),
                                                     Forms\Components\FileUpload::make('pin_certificate_copy')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
                                                         ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
                                                         ->maxSize(1000)
-                                                        ->preserveFilenames()->label('Pin Certificate Copy')->required(),
+                                                        ->preserveFilenames()
+                                                        ->label('Pin Certificate Copy')
+                                                        ->required($pinCertificateCopy),
                                                     Forms\Components\FileUpload::make('business_permit_copy')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
                                                         ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
                                                         ->maxSize(1000)
-                                                        ->preserveFilenames()->label('Business Permit Copy')->required(),
+                                                        ->preserveFilenames()->label('Business Permit Copy')
+                                                        ->required($businessPermitCopy),
                                                     Forms\Components\FileUpload::make('cr12_documents')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
                                                         ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
                                                         ->maxSize(1000)
-                                                        ->preserveFilenames()->label('CR12 Document')->required(),
+                                                        ->preserveFilenames()->label('CR12 Document')
+                                                        ->required($cr12Documents),
                                                     Forms\Components\FileUpload::make('passport_ceo')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
                                                         ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
                                                         ->maxSize(1000)
-                                                        ->preserveFilenames()->label('Passport/National ID of Director/CEO')->required(),
+                                                        ->preserveFilenames()->label('Passport/National ID of Director/CEO')
+                                                        ->required($passportCeo),
                                                     Forms\Components\FileUpload::make('passport_photo_ceo')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
                                                         ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
                                                         ->maxSize(1000)
-                                                        ->preserveFilenames()->label('Passport size Photo of Director/ CEO ')->required(),
+                                                        ->preserveFilenames()->label('Passport size Photo of Director/ CEO ')
+                                                        ->required($passportPhotoCeo),
                                                     Forms\Components\FileUpload::make('statement')
                                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
                                                         ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
                                                         ->maxSize(1000)
-                                                        ->preserveFilenames()->label('Statement')->required(),
+                                                        ->preserveFilenames()->label('Statement')
+                                                        ->required($statement),
                                                         
                                                 ])
                                                     ->columns(2)
@@ -508,15 +638,16 @@ class CustomerSitesResource extends Resource
                                     Forms\Components\Select::make('document_types_id')->label('Document Name')
                                         ->options(fn (Get $get): Collection => DocumentTypes::query()
                                             ->where('document_type_status', '1')
-                                            ->pluck('document_type_name', 'id'))->required(),
+                                            ->pluck('document_type_name', 'id'))->required($documentTypeStatus),
                                     Forms\Components\FileUpload::make('document')
                                         ->acceptedFileTypes(['image/jpeg', 'image/jpg', 'image/png', 'application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv', 'application/msword'])
                                         ->HelperText("Supported file -> JPEG, JPG, PNG & PDF, Excel, Csv, DOC Maximum size -> 1MB")
                                         ->maxSize(1000)
                                         ->preserveFilenames()
-                                        ->label('Document')->required(),
+                                        ->label('Document')->required($document),
                                     Forms\Components\Textarea::make('description')
-                                        ->label('Description'),
+                                        ->label('Description')
+                                        ->required($description),
                                         
                                 ])->deletable(false)
                                     ->reorderable(false),
@@ -554,6 +685,21 @@ class CustomerSitesResource extends Resource
 
     public static function addressForm(Form $form): Form
     {
+        $nearestLandmark = Setting::get('nearest_landmark') === '1';
+        $postalCode = Setting::get('postal_code') === '1';
+        $companyLandlineNumber = Setting::get('company_landline_number') === '1';
+        $siteName = Setting::get('site_name') === '1';
+        $locationName = Setting::get('location_name') === '1';
+        $country = Setting::get('country') === '1';
+        $territory=Setting::get('territory_id') ==='1';
+        $kenyaCities=Setting::get('kenya_cities_id')==='1';
+        $address1=Setting::get('address_1')==='1';
+        $address2=Setting::get('address_2')==='1';
+        $address3=Setting::get('address_3')==='1';
+        $address4=Setting::get('address_4')==='1';
+        $location=Setting::get('location')==='1';
+        $latitude=Setting::get('latitude')==='1';
+        $longitude=Setting::get('longitude')==='1';
         return $form
             ->schema([
                 //
@@ -567,15 +713,15 @@ class CustomerSitesResource extends Resource
                             TextInput::make('location_name')
                             ->regex('/^[a-zA-Z\s]+$/')
                             ->label('Location Name')
-                            ->required(),
+                            ->required($locationName),
                         TextInput::make('site_name')
-                            ->required()
+                            ->required($siteName)
                             ->label('Site Name')
                             ->regex('/^[a-zA-Z\s]+$/'),
-                        Textarea::make('address_1')->label('Address 1')->maxLength(230)->required(),
-                        Textarea::make('address_2')->label('Address 2')->maxLength(230),
-                        Textarea::make('address_3')->label('Address 3')->maxLength(230),
-                        Textarea::make('address_4')->label('Address 4')->maxLength(230),
+                        Textarea::make('address_1')->label('Address 1')->maxLength(230)->required($address1),
+                        Textarea::make('address_2')->label('Address 2')->maxLength(230)->required($address2),
+                        Textarea::make('address_3')->label('Address 3')->maxLength(230)->required($address3),
+                        Textarea::make('address_4')->label('Address 4')->maxLength(230)->required($address4),
                         Radio::make('location_type')->options([
                             'Head Office' => 'Head Office',
                             'branch' => 'Branch'
@@ -585,29 +731,30 @@ class CustomerSitesResource extends Resource
                             ->inlineLabel(false),
 
                         Select::make('country_id')
-                            ->relationship(name: 'country', titleAttribute: 'country_name')->required()
+                            ->relationship(name: 'country', titleAttribute: 'country_name')->required($country)
                             ->label('Country')
                             ->live()
                             ->default(static::getDefaultCountryId()),
                         Select::make('territory_id')
-                            ->relationship(name: 'Territory', titleAttribute: 'territory')->required()
+                            ->relationship(name: 'Territory', titleAttribute: 'territory')->required($territory)
                             ->label('Territory Name')
                             ->visible(fn (Get $get) => $get('country_id') == Country::where('country_name', 'Kenya')->first()->id ?? null),
                         Select::make('kenya_cities_id')
-                            ->relationship(name: 'KenyaCities', titleAttribute: 'city')->required()
+                            ->relationship(name: 'KenyaCities', titleAttribute: 'city')->required($kenyaCities)
                             ->label('Region')
                             ->visible(fn (Get $get) => $get('country_id') == Country::where('country_name', 'Kenya')->first()->id ?? null),
                         TextInput::make('companylandline_number')
                             ->label('Company landline number')
                             ->tel()
+                            ->required($companyLandlineNumber)
                             ->minLength(10)
                             ->maxLength(15),
                         TextInput::make('nearest_landmark')
-                            ->required()
+                            ->required($nearestLandmark)
                             ->label('Nearest Landmark')
                             ->regex('/^[a-zA-Z0-9\s]+$/'),
                         TextInput::make('postal_code')
-                            ->required()
+                            ->required($postalCode)
                             ->label('Postal Code')
                             ->tel()
                             ->minLength(4)
@@ -622,6 +769,7 @@ class CustomerSitesResource extends Resource
                                     ->coordinates(78.79934560848218, 22.38112547828412) // start coordinates
                                     ->rows(10) // height of map
                                     ->reactive()
+                                    ->required($location)
                                     ->readOnly()
                                     ->afterStateUpdated(function ($state, callable $get, callable $set) {
                                         $loc = explode(',', $state);
@@ -634,11 +782,11 @@ class CustomerSitesResource extends Resource
                                 Grid::make(1)
                                     ->schema([
                                         TextInput::make('latitude')
-                                            ->required()
+                                            ->required($latitude)
                                             ->label('Latitude')
                                             ->readOnly(),
                                         TextInput::make('longitude')
-                                            ->required()
+                                            ->required($longitude)
                                             ->label('Longitude')
                                             ->readOnly(),
                                     ])->columnSpan(1) // Make the inputs take up one column

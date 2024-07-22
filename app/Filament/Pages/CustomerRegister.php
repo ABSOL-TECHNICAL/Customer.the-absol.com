@@ -221,8 +221,8 @@ class CustomerRegister extends Register
 
     protected function sendOtpToUser(string $otpCode): void
     {
-        // $this->email = $this->data['email'];
-        $names = $this->data['name'];
+        $this->email = $this->data['email'];
+        // $names = $this->data['name'];
 
         // $this->name=Customer::query()->where('email',$this->email)->value('name');
         
