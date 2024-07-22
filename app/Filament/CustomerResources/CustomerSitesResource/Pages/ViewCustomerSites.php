@@ -271,30 +271,99 @@ class ViewCustomerSites extends ViewRecord
                                             ->where('currency_status', '1')
                                             ->pluck('currency_name', 'id'))
                                         ->required(),
-                                    Select::make('bank_id')
-                                        ->options(fn (Get $get): Collection => Bank::query()
-                                            ->where('bank_status', '1')
-                                            ->pluck('Bank_name', 'id'))
 
-                                        ->label('Bank')
-                                        ->preload()
-                                        ->live()
-                                        ->required(),
+
+                                        Select::make('bank_id')
+                                            ->options(fn (Get $get): Collection => Bank::query()
+                                                ->where('bank_status', '1')
+                                                ->pluck('Bank_name', 'id'))
+                                            ->label('Bank')
+                                            ->preload()
+                                            ->live()
+                                            ->afterStateUpdated(fn ($state, Set $set) => $set('bank_code', Bank::find($state)?->bank_code ?? 0))
+                                            ->required()
+                                            ->createOptionForm([
+                                            TextInput::make('bank_name')
+                                            ->label('Bank')
+                                            ->regex('/^[a-zA-Z\s]+$/')
+                                            ->required(),
+                                            TextInput::make('bank_code')
+                                            ->label('Bank Code')
+                                            ->regex('/^[0-9\s]+$/')
+                                            ->required(),  
+                                            TextInput::make('bank_status')
+                                            ->label('Bank Status')
+                                            ->default(1)->readOnly(),
+                                            ]) ->createOptionUsing(function ($data) {
+                                                return Bank::create($data)->id;
+                                                
+                                            }),
+
+
+                                    // Select::make('bank_id')
+                                    //     ->options(fn (Get $get): Collection => Bank::query()
+                                    //         ->where('bank_status', '1')
+                                    //         ->pluck('Bank_name', 'id'))
+
+                                    //     ->label('Bank')
+                                    //     ->preload()
+                                    //     ->live()
+                                    //     ->required(),
+
+
                                     TextInput::make('bank_holder_name')
                                         ->label('Bank Holder Name')
                                         ->regex('/^[a-zA-Z\s]+$/')
                                         ->required(),
+
+
+                                    // Select::make('branch_id')
+                                    //     // ->relationship(name:'branch',titleAttribute:'branch_name'),
+                                    //     ->options(fn (Get $get): Collection => Branch::query()
+                                    //         ->where('bank_id', $get('bank_id'))
+                                    //         ->where('branch_status', '1')
+                                    //         ->pluck('branch_name', 'id'))
+                                    //     ->afterStateUpdated(fn ($state, Set $set) => $set('bank_code', Branch::find($state)?->branch_code ?? 0))
+                                    //     ->label('Branch Name')
+                                    //     ->preload()
+                                    //     ->live()
+                                    //     ->required(),
+
                                     Select::make('branch_id')
-                                        // ->relationship(name:'branch',titleAttribute:'branch_name'),
-                                        ->options(fn (Get $get): Collection => Branch::query()
-                                            ->where('bank_id', $get('bank_id'))
-                                            ->where('branch_status', '1')
-                                            ->pluck('branch_name', 'id'))
-                                        ->afterStateUpdated(fn ($state, Set $set) => $set('bank_code', Branch::find($state)?->branch_code ?? 0))
-                                        ->label('Branch Name')
-                                        ->preload()
-                                        ->live()
-                                        ->required(),
+                                            ->options(fn (Get $get): Collection => Branch::query()
+                                                ->where('bank_id', $get('bank_id'))
+                                                ->where('branch_status', '1')
+                                                ->pluck('branch_name', 'id'))
+                                            
+                                            ->label('Branch Name')
+                                            ->preload()
+                                            ->live()
+                                            ->required()
+                                            ->createOptionForm([
+                                                TextInput::make('branch_name')
+                                                ->required()
+                                            ->label('Branch Name')
+                                            ->regex('/^[a-zA-Z\s]+$/')
+                                            ->required(),
+                                            TextInput::make('branch_code')
+                                            ->required()
+                                            ->label('Branch Code')
+                                            ->regex('/^[0-9\s]+$/')
+                                            ->required(),
+                                            TextInput::make('branch_status')
+                                            ->required()
+                                            ->label('Bank Status')
+                                            ->default(1)->readOnly(), 
+                                            Select::make('bank_id')
+                                            ->required()
+                                            ->options(fn (Get $get): Collection => Bank::query()
+                                                ->where('bank_status', '1')
+                                                ->pluck('Bank_name', 'id'))
+                                            ])->createOptionUsing(function ($data) { 
+                                                return Branch::create($data)->id;
+                                            }),
+
+
                                     TextInput::make('bank_account_number')
                                         ->label('Account Number')
                                         ->regex('/^[0-9\s]+$/')
